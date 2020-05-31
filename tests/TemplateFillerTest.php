@@ -130,7 +130,7 @@ class TemplateFillerTest extends TestCase
         $this->assertTrue($template->fillTemplate($path . '/input', $path . '/output'));
         $this->assertFileEqualsString( "company", $path . '/output/project');
         $this->assertFileNotExists( $path . '/output/.hidden');
-        $this->assertFileNotExists( $path . '/output/nested');
+        $this->assertFileExists( $path . '/output/nested');
         $this->assertFileNotExists( $path . '/output/nested/.hidden');
     }
 
