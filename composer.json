@@ -1,6 +1,6 @@
 {
   "name": "edwrodrig/temple_core",
-  "description": "Un motor de plantillas de proyectos",
+  "description": "Una biblioteca para procesar plantillas de proyectos",
   "authors": [
     {
       "name": "Edwin Rodríguez-León",

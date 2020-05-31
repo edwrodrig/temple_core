@@ -1,6 +1,6 @@
 edwrodrig\temple_core
 ========
-Una nueva asombrosa biblioteca Composer.
+Una biblioteca para procesar plantillas de proyectos.
 
 [![Latest Stable Version](https://poser.pugx.org/edwrodrig/temple_core/v/stable)](https://packagist.org/packages/edwrodrig/temple_core)
 [![Total Downloads](https://poser.pugx.org/edwrodrig/temple_core/downloads)](https://packagist.org/packages/edwrodrig/temple_core)
@@ -11,10 +11,31 @@ Una nueva asombrosa biblioteca Composer.
 ![Hecho en Chile](https://img.shields.io/badge/country-Chile-red)
 
 
+## Uso
+Suponiendo que tenemos un directorio `input_dir` con archivos de cualquier tipo.
+```php
+use \edwrodrig\temple_core\TemplateFiller;
 
+$company = 'edwrodrig';
+$project = 'project';
+$filler = new TemplateFiller('edwrodrig', 'project');
+
+//informamos que los archivos o carpetas con nombre .git o ignored_file serán ignorados
+$filler->ignore('.git', 'ignored_file');
+
+//construimos template
+if ( $filler->fillTemplate('input_dir', 'output_dir') ) {
+    echo "success\n";
+}
+```
+El código anterior generará una nueva carpeta en `output_dir` en donde reemplazará tanto nombres como contenidos según reglas de reemplazo de platillas.
+
+Las reglas de reemplazo son las siguientes:
+ - Las ocurrencias de `tpl_company_tpl` serán reemplazadas por el <strong>nombre de la compañía</strong> especificada.
+ - Las ocurrencias de `tpl_project_tpl` serán reemplazadas por el <strong>nombre de proyecto</strong> especificada.
 
 ## Instalación
-```
+```shell script
 composer require edwrodrig/temple_core
 ```
 
@@ -35,4 +56,5 @@ Zend Engine v3.4.0, Copyright (c) Zend Technologies
   - Este proyecto esta pensado para ser trabajado usando [PhpStorm](https://www.jetbrains.com/phpstorm).
   - Se usa [PHPUnit](https://phpunit.de/) para las pruebas unitarias de código.
   - Para la documentación se utiliza el estilo de [phpDocumentor](http://docs.phpdoc.org/references/phpdoc/basic-syntax.html). 
+  
 
