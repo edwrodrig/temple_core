@@ -18,17 +18,17 @@ use \edwrodrig\temple_core\TemplateFiller;
 
 $company = 'edwrodrig';
 $project = 'project';
-$filler = new TemplateFiller('edwrodrig', 'project');
+$filler = new TemplateFiller($company, $project);
 
 //informamos que los archivos o carpetas con nombre .git o ignored_file serán ignorados
 $filler->ignore('.git', 'ignored_file');
 
-//construimos template
+//construimos el proyecto en base a la plantilla
 if ( $filler->fillTemplate('input_dir', 'output_dir') ) {
     echo "success\n";
 }
 ```
-El código anterior generará una nueva carpeta en `output_dir` en donde reemplazará tanto nombres como contenidos según reglas de reemplazo de platillas.
+El código anterior generará una nueva carpeta en `output_dir` en donde reemplazará tanto nombres como contenidos según reglas de reemplazo de plantillas.
 
 Las reglas de reemplazo son las siguientes:
  - Las ocurrencias de `tpl_company_tpl` serán reemplazadas por el <strong>nombre de la compañía</strong> especificada.
