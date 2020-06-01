@@ -5,18 +5,24 @@ namespace test\edwrodrig\temple_core;
 
 use edwrodrig\temple_core\TemplateFiller;
 use Exception;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 
 class TemplateFillerTest extends TestCase
 {
+    /**
+     * @var false|string
+     */
+    private $path;
 
-    private vfsStreamDirectory $root;
+    public function setUp() : void {
+        $this->path =  tempnam(__DIR__, 'demo_phar');
 
-    public function setUp(): void
-    {
-        $this->root = vfsStream::setup();
+        unlink($this->path);
+        mkdir($this->path, 0777);
+    }
+
+    public function tearDown() : void {
+        exec('rm -rf ' . $this->path);
     }
 
 
@@ -46,7 +52,7 @@ class TemplateFillerTest extends TestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("current directory does not exists");
-        $path = $this->root->url();
+        $path = $this->path;
 
         $template = new TemplateFiller("company", "project");
         $template->fillTemplate($path . '/input', $path . '/output');
@@ -57,7 +63,7 @@ class TemplateFillerTest extends TestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("output directory exists");
-        $path = $this->root->url();
+        $path = $this->path;
 
         mkdir( $path . '/input');
         mkdir( $path . '/output');
@@ -72,7 +78,7 @@ class TemplateFillerTest extends TestCase
      */
     public function testFillTemplateBasic()
     {
-        $path = $this->root->url();
+        $path = $this->path;
         mkdir( $path . '/input');
         file_put_contents($path . '/input/tpl_project_tpl', "tpl_company_tpl");
 
@@ -99,7 +105,7 @@ class TemplateFillerTest extends TestCase
 
     public function testFillTemplatePath(string $file)
     {
-        $path = $this->root->url();
+        $path = $this->path;
         $dirname = dirname($file);
         mkdir($path . '/input/' . $dirname, 0777, true);
 
@@ -115,7 +121,7 @@ class TemplateFillerTest extends TestCase
      */
     public function testFillTemplateComplex()
     {
-        $path = $this->root->url();
+        $path = $this->path;
         mkdir( $path . '/input');
         file_put_contents($path . '/input/tpl_project_tpl', "tpl_company_tpl");
         file_put_contents($path . '/input/.hidden', "content");
@@ -134,7 +140,7 @@ class TemplateFillerTest extends TestCase
      */
     public function testFillTemplateIgnore()
     {
-        $path = $this->root->url();
+        $path = $this->path;
         mkdir( $path . '/input');
         file_put_contents($path . '/input/tpl_project_tpl', "tpl_company_tpl");
         file_put_contents($path . '/input/.hidden', "content");

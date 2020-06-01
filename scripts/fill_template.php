@@ -13,6 +13,7 @@ $project = $argv[2] ?? die($usage);
 $input_dir = $argv[3] ?? die($usage);
 $output_dir = $argv[4] ?? die($usage);
 
+
 try {
     $filler = new TemplateFiller('edwrodrig', 'project');
 

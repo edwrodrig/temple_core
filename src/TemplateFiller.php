@@ -100,8 +100,8 @@ class TemplateFiller
      * @api
      */
     public function fillTemplate(string $current_directory, string $output_directory) {
-        if ( !is_dir($current_directory) )
-            throw new Exception("current directory does not exists");
+        if ( !$this->isDirForPhar($current_directory) )
+            throw new Exception("current directory does not exists ");
         if ( file_exists($output_directory) )
             throw new Exception("output directory exists");
         mkdir($output_directory, 0777, true);
@@ -117,6 +117,21 @@ class TemplateFiller
 
             }
         }
+    }
+
+    /**
+     * Esta función resuelve el problema de usar {@see is_dir()} dentro de un Phar con rutas relativas.
+     * Cuando se usa solamente {@see is_dir} {@see TemplateFiller2Test::testRunPharRelative2()} falla.
+     * @param string $input_dir
+     * @return false|string
+     * @throws Exception
+     */
+    public static function isDirForPhar(string $input_dir) : bool {
+        if ( $input_dir = realpath($input_dir) )
+            if ( is_dir($input_dir) )
+                return true;
+        return false;
+
     }
 
 }

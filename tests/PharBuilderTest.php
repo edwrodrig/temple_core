@@ -71,4 +71,30 @@ class PharBuilderTest extends TestCase
         $this->assertDirectoryExists($this->output_folder);
     }
 
+    /**
+     * Error replicado de problemas de is_dir cuando se está dentro de un phar.
+     * @throws Exception
+     */
+    public function testRunPharRelative2() {
+        $this->testMakePhar();
+
+        mkdir($this->output_folder);
+        chdir($this->output_folder);
+
+        mkdir('test/input', 0777, true);
+        touch('test/input/hola');
+
+        chdir('test');
+        copy($this->phar_file, 'demo.phar');
+
+        $command = sprintf('php demo.phar company project %s %s',
+            escapeshellarg('input'),
+            escapeshellarg('output')
+        );
+        exec($command, $output, $return);
+        $this->assertEquals("", $output[0] ?? "");
+        $this->assertEquals(0, $return);
+        $this->assertDirectoryExists($this->output_folder);
+    }
+
 }
