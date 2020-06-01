@@ -79,7 +79,7 @@ class TemplateFiller
      */
     public function filesToReplace(string $path) {
         foreach ( new DirectoryIterator($path) as $file_info ) {
-            $absolute_filename = $file_info->getPathname();
+            $absolute_filename = $file_info->getRealPath();
             $output_filename = $file_info->getBasename();
             if ( $file_info->isDot() ) continue;
             if ( in_array($output_filename, $this->ignored_file_list) ) continue;
