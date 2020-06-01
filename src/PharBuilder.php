@@ -54,7 +54,7 @@ class PharBuilder
             exit();
         } catch ( Throwable $exception ) {
             printf($exception->getMessage());
-            die();
+            die(1);
         }
     }
 }
