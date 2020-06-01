@@ -20,6 +20,10 @@ class FillTemplateScriptTest extends TestCase
         unlink($this->output_folder);
     }
 
+    public function tearDown() : void {
+        exec(sprintf('rm -rf %s', escapeshellarg($this->output_folder)));
+    }
+
     /**
      * @throws Exception
      */
@@ -89,9 +93,5 @@ class FillTemplateScriptTest extends TestCase
         $this->assertEquals("current directory does not exists", $output[0]);
         $this->assertEquals(1, $return);
         $this->assertDirectoryNotExists($this->output_folder);
-    }
-
-    public function tearDown() : void {
-        exec(sprintf('rm -rf %s', escapeshellarg($this->output_folder)));
     }
 }
