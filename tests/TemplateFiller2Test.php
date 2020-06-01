@@ -42,7 +42,6 @@ class TemplateFiller2Test extends TestCase
      * @param string $file
      * @throws Exception
      */
-
     public function testFillTemplatePath(string $file)
     {
         chdir($this->base_folder);
@@ -53,6 +52,23 @@ class TemplateFiller2Test extends TestCase
         $template = new TemplateFiller("company", "project");
         $template->fillTemplate( 'input',  'output');
         $this->assertFileEqualsString( "content", 'output/' . $file);
+    }
+
+    /**
+     * @dataProvider fillTemplatePathProvider
+     * @param string $file
+     * @throws Exception
+     */
+    public function testFillTemplatePathReplace(string $file)
+    {
+        chdir($this->base_folder);
+        $folder = $this->base_folder . '/input/' . dirname($file);
+        mkdir($folder, 0777, true);
+        file_put_contents('input/' . $file, "tpl_company_tpl_tpl_project_tpl");
+
+        $template = new TemplateFiller("company", "project");
+        $template->fillTemplate( 'input',  'output');
+        $this->assertFileEqualsString( "company_project", 'output/' . $file);
     }
 
     public function assertFileEqualsString(string $expected, string $filename, string $message = "") {

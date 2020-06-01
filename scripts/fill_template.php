@@ -15,7 +15,7 @@ $output_dir = $argv[4] ?? die($usage);
 
 
 try {
-    $filler = new TemplateFiller('edwrodrig', 'project');
+    $filler = new TemplateFiller($company, $project);
 
     //ignoramos los archivos o carpetas con nombre .git
     $filler->ignore('.git');
