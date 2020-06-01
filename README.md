@@ -10,7 +10,6 @@ Una biblioteca para procesar plantillas de proyectos.
 [![Code Climate](https://codeclimate.com/github/edwrodrig/temple_core/badges/gpa.svg)](https://codeclimate.com/github/edwrodrig/temple_core)
 ![Hecho en Chile](https://img.shields.io/badge/country-Chile-red)
 
-
 ## Uso
 Suponiendo que tenemos un directorio `input_dir` con archivos de cualquier tipo.
 ```php
@@ -24,9 +23,7 @@ $filler = new TemplateFiller($company, $project);
 $filler->ignore('.git', 'ignored_file');
 
 //construimos el proyecto en base a la plantilla
-if ( $filler->fillTemplate('input_dir', 'output_dir') ) {
-    echo "success\n";
-}
+$filler->fillTemplate('input_dir', 'output_dir');
 ```
 El código anterior generará una nueva carpeta en `output_dir` en donde reemplazará tanto nombres como contenidos según reglas de reemplazo de plantillas.
 
@@ -34,10 +31,22 @@ Las reglas de reemplazo son las siguientes:
  - Las ocurrencias de `tpl_company_tpl` serán reemplazadas por el <strong>nombre de la compañía</strong> especificada.
  - Las ocurrencias de `tpl_project_tpl` serán reemplazadas por el <strong>nombre de proyecto</strong> especificada.
 
-## Instalación
+## Instalación como biblioteca
 ```shell script
 composer require edwrodrig/temple_core
 ```
+
+## Instalación como ejecutable
+Se puede construir un ejecutable con [make_phar.php](https://github.com/edwrodrig/hapi_core/blob/master/scripts/make_phar.php) usando el siguiente comando:
+```shell script
+php -d phar.readonly=Off scripts/make_phar.php
+```
+Ese comando construirá un <code>temple_core.phar</code> que se podrá lanzar de la siguiente manera:
+```shell script
+php temple_core.phar company project input_dir output_dir
+```
+Los argumentos corresponden a cada una de los variables recibidas por la clase [TemplateFiller](https://github.com/edwrodrig/hapi_core/blob/master/src/TemplateFiller.php)
+
 
 ## Información de mi máquina de desarrollo
 Salida de [system_info.sh](https://github.com/edwrodrig/hapi_core/blob/master/scripts/system_info.sh)
