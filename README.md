@@ -41,7 +41,9 @@ Se puede construir un ejecutable con [make_phar.php](https://github.com/edwrodri
 ```shell script
 php -d phar.readonly=Off scripts/make_phar.php
 ```
-Ese comando construirá un <code>temple_core.phar</code> que se podrá lanzar de la siguiente manera:
+Hay una [run configuration](https://www.jetbrains.com/help/phpstorm/run-debug-configuration.html) de PhpStorm que lanza el comando anterior.
+
+El comando anterior construirá <code>temple_core.phar</code> que se podrá lanzar de la siguiente manera:
 ```shell script
 php temple_core.phar company project input_dir output_dir
 ```
