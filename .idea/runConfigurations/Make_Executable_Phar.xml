@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Make Executable Phar" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/scripts/make_phar.php">
+    <CommandLine parameters="-d phar.readonly=Off" />
+    <method v="2" />
+  </configuration>
+</component>

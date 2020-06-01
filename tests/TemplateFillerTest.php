@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace test\edwrodrig\temple_core;
 
 use edwrodrig\temple_core\TemplateFiller;
+use Exception;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +35,6 @@ class TemplateFillerTest extends TestCase
      * @param $expected
      * @param $actual
      */
-
     public function testReplaceBasic(string $expected, string $actual)
     {
         $template = new TemplateFiller("company", "project");
@@ -44,23 +44,32 @@ class TemplateFillerTest extends TestCase
 
     public function testFillTemplateInputNoExistent()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("current directory does not exists");
         $path = $this->root->url();
 
         $template = new TemplateFiller("company", "project");
-        $this->assertFalse($template->fillTemplate($path . '/input', $path . '/output'));
+        $template->fillTemplate($path . '/input', $path . '/output');
 
     }
 
     public function testFillTemplateOutputAlreadyExistent()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("output directory exists");
         $path = $this->root->url();
+
         mkdir( $path . '/input');
         mkdir( $path . '/output');
 
         $template = new TemplateFiller("company", "project");
-        $this->assertFalse($template->fillTemplate($path . '/input', $path . '/output'));
+        $template->fillTemplate($path . '/input', $path . '/output');
+
     }
 
+    /**
+     * @throws Exception
+     */
     public function testFillTemplateBasic()
     {
         $path = $this->root->url();
@@ -68,7 +77,7 @@ class TemplateFillerTest extends TestCase
         file_put_contents($path . '/input/tpl_project_tpl', "tpl_company_tpl");
 
         $template = new TemplateFiller("company", "project");
-        $this->assertTrue($template->fillTemplate($path . '/input', $path . '/output'));
+        $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileExists( $path . '/output/project');
         $this->assertEquals("company", file_get_contents($path . '/output/project'));
     }
@@ -85,6 +94,7 @@ class TemplateFillerTest extends TestCase
     /**
      * @dataProvider fillTemplatePathProvider
      * @param string $file
+     * @throws Exception
      */
 
     public function testFillTemplatePath(string $file)
@@ -96,10 +106,13 @@ class TemplateFillerTest extends TestCase
         file_put_contents($path . '/input/' . $file, "content");
 
         $template = new TemplateFiller("company", "project");
-        $this->assertTrue($template->fillTemplate($path . '/input', $path . '/output'));
+        $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileEqualsString( "content", $path . '/output/' . $file);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testFillTemplateComplex()
     {
         $path = $this->root->url();
@@ -110,12 +123,15 @@ class TemplateFillerTest extends TestCase
         file_put_contents($path . '/input/nested/.hidden', "content");
 
         $template = new TemplateFiller("company", "project");
-        $this->assertTrue($template->fillTemplate($path . '/input', $path . '/output'));
+        $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileEqualsString( "company", $path . '/output/project');
         $this->assertFileEqualsString( "content", $path . '/output/.hidden');
         $this->assertFileEqualsString( "content", $path . '/output/nested/.hidden');
     }
 
+    /**
+     * @throws Exception
+     */
     public function testFillTemplateIgnore()
     {
         $path = $this->root->url();
@@ -127,7 +143,7 @@ class TemplateFillerTest extends TestCase
 
         $template = new TemplateFiller("company", "project");
         $template->ignore('.hidden');
-        $this->assertTrue($template->fillTemplate($path . '/input', $path . '/output'));
+        $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileEqualsString( "company", $path . '/output/project');
         $this->assertFileNotExists( $path . '/output/.hidden');
         $this->assertFileExists( $path . '/output/nested');

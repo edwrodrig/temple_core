@@ -21,12 +21,16 @@
   "autoload": {
     "psr-4": {
       "edwrodrig\\temple_core\\": "src/"
-    }
+    },
+    "exclude-from-classmap": ["src/PharBuilder.php"]
   },
   "autoload-dev": {
     "psr-4": {
       "test\\edwrodrig\\temple_core\\": "tests/"
-    }
+    },
+    "files" : [
+      "src/PharBuilder.php"
+    ]
   },
   "archive": {
     "exclude": [
@@ -34,6 +38,7 @@
       "/.idea",
       "/examples",
       "/scripts",
+      "/src/PharBuilder.php",
       "/tests",
       "/.gitignore",
       "/.phpunit.result.cache",

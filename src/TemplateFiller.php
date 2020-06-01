@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace edwrodrig\temple_core;
 
 use DirectoryIterator;
+use Exception;
 use Generator;
 
 class TemplateFiller
@@ -93,16 +94,16 @@ class TemplateFiller
      * - con contenido reemplazado por {@see replace()}
      * - se excluyen los archivos registrados por {@see ignore()}
      *
-     * @api
      * @param string $current_directory el directorio original con los templates
      * @param string $output_directory el directorio de salida con los templates llenados
-     * @return bool
+     * @throws Exception
+     * @api
      */
     public function fillTemplate(string $current_directory, string $output_directory) {
         if ( !is_dir($current_directory) )
-            return false;
+            throw new Exception("current directory does not exists");
         if ( file_exists($output_directory) )
-            return false;
+            throw new Exception("output directory exists");
         mkdir($output_directory, 0777, true);
 
         foreach ($this->filesToReplace($current_directory) as $absolute_filename => $output_filename) {
@@ -116,7 +117,6 @@ class TemplateFiller
 
             }
         }
-        return true;
     }
 
 }
