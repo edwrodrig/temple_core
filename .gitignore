@@ -7,10 +7,8 @@
 !/.idea/dictionaries
 /.idea/dictionaries/*
 !/.idea/dictionaries/common.xml
-!/.idea/php.xml
 !/.idea/runConfigurations
 !/.idea/fileTemplates
 !/.idea/file.template.settings.xml
 !/.idea/modules.xml
 !/.idea/temple_core.iml
-!/.idea/php-test-framework.xml
