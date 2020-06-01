@@ -43,6 +43,24 @@ class FillTemplateScriptTest extends TestCase
     /**
      * @throws Exception
      */
+    public function testScriptOkRelative()
+    {
+        chdir(__DIR__);
+
+        $command = sprintf('php %s company project %s %s',
+            escapeshellarg( '../scripts/fill_template.php'),
+            escapeshellarg('../src'),
+            escapeshellarg(basename($this->output_folder))
+        );
+        exec($command, $output, $return);
+        $this->assertEquals([], $output);
+        $this->assertEquals(0, $return);
+        $this->assertDirectoryExists($this->output_folder);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function testScriptOneArg()
     {
         $command = sprintf('php %s company', escapeshellarg(__DIR__ . '/../scripts/fill_template.php'));
