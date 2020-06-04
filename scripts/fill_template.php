@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use edwrodrig\exception_with_data\ExceptionWithData;
 use edwrodrig\temple_core\TemplateFiller;
 
 require_once(__DIR__ . '/../src/TemplateFiller.php');
@@ -24,7 +25,13 @@ try {
     //construimos template
     $filler->fillTemplate($input_dir, $output_dir);
 
+} catch ( ExceptionWithData $exception ) {
+    echo $exception->getMessage() , "\n";
+    echo json_encode([ 'd' => $exception->getData(), 't' => $exception->getTrace()], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    exit(1);
+
 } catch ( Throwable $exception ) {
     echo $exception->getMessage() , "\n";
+    echo json_encode([ 't' => $exception->getTrace()], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     exit(1);
 }

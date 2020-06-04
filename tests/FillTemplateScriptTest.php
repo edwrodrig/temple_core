@@ -108,7 +108,10 @@ class FillTemplateScriptTest extends TestCase
             escapeshellarg($this->output_folder)
         );
         exec($command, $output, $return);
-        $this->assertEquals("current directory does not exists", $output[0]);
+        $this->assertEquals("current directory does not exists", array_shift($output));
+
+        $output = implode("\n",$output);
+        $this->assertJson($output);
         $this->assertEquals(1, $return);
         $this->assertDirectoryNotExists($this->output_folder);
     }
