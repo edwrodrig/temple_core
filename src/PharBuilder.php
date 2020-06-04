@@ -5,7 +5,6 @@ namespace edwrodrig\temple_core;
 
 use ArrayIterator;
 use edwrodrig\exception_with_data\ExceptionWithData;
-use Exception;
 use Phar;
 use Throwable;
 
@@ -42,7 +41,6 @@ class PharBuilder
      * El script que contenga esta llamada debe tener configurada la variable {@see https://www.php.net/manual/es/phar.configuration.php#ini.phar.readonly phar.readonly} en <strong>On</strong>
      * Eso se puede hacer modificando el archivo {@see https://www.php.net/manual/en/configuration.file.php php.ini} o llamando el script con <code>php -d phar.readonly=Off</code>.
      * El primer argumento que captura es el nombre de phar de salida.
-     * @codeCoverageIgnore
      */
     public static function consoleLaunch() {
         global $argv;
@@ -52,10 +50,10 @@ class PharBuilder
             $builder = new PharBuilder();
             $builder->buildPhar($output);
             printf(realpath($output));
-            exit();
+            return 0;
         } catch ( Throwable $exception ) {
             printf($exception->getMessage());
-            die(1);
+            return 1;
         }
     }
 }

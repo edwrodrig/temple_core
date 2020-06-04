@@ -65,8 +65,22 @@ class PharBuilderTest extends TestCase
             $this->assertEquals("can't write a Phar file", $exception->getMessage());
             $this->assertEquals(['output' => $this->phar_file, 'phar.readonly' => '1'], $exception->getData());
         }
+    }
 
+    public function testMakePharConsoleLaunchReadOnly() {
 
+        $this->expectOutputString("can't write a Phar file");
+        ini_set('phar.readonly', '1');
+
+        $this->assertEquals(1, PharBuilder::consoleLaunch());
+    }
+
+    public function testMakePharConsoleLaunchOk() {
+        global $argv;
+        $argv[1] = $this->phar_file;
+        $this->expectOutputString($this->phar_file);
+        ini_set('phar.readonly', '0');
+        $this->assertEquals(0, PharBuilder::consoleLaunch());
     }
 
 }

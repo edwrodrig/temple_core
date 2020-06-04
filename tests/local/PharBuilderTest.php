@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace test\local\edwrodrig\temple_core;
+namespace test\edwrodrig\temple_core\local;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

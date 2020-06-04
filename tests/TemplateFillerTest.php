@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace test\edwrodrig\temple_core;
 
+use edwrodrig\exception_with_data\ExceptionWithData;
 use edwrodrig\temple_core\TemplateFiller;
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -48,6 +49,9 @@ class TemplateFillerTest extends TestCase
     }
 
 
+    /**
+     * @throws ExceptionWithData
+     */
     public function testFillTemplateInputNoExistent()
     {
         $this->expectException(Exception::class);
@@ -59,6 +63,9 @@ class TemplateFillerTest extends TestCase
 
     }
 
+    /**
+     * @throws ExceptionWithData
+     */
     public function testFillTemplateOutputAlreadyExistent()
     {
         $this->expectException(Exception::class);
