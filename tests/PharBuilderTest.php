@@ -92,7 +92,6 @@ class PharBuilderTest extends TestCase
             escapeshellarg('output')
         );
         exec($command, $output, $return);
-        var_dump($output);
         $this->assertEquals("", $output[0] ?? "");
         $this->assertEquals(0, $return);
         $this->assertDirectoryExists($this->output_folder . '/test/output');

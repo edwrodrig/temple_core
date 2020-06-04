@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace edwrodrig\temple_core;
 
 use DirectoryIterator;
-use Exception;
+use edwrodrig\exception_with_data\ExceptionWithData;
 use Generator;
 
 class TemplateFiller
@@ -96,14 +96,15 @@ class TemplateFiller
      *
      * @param string $current_directory el directorio original con los templates
      * @param string $output_directory el directorio de salida con los templates llenados
-     * @throws Exception
+     * @throws ExceptionWithData
      * @api
      */
     public function fillTemplate(string $current_directory, string $output_directory) {
         if ( !$this->isDirForPhar($current_directory) )
-            throw new Exception("current directory does not exists ");
+            throw new ExceptionWithData("current directory does not exists", [ "current_directory" => $current_directory, "output_directory" => $output_directory]);
         if ( file_exists($output_directory) )
-            throw new Exception("output directory exists");
+            throw new ExceptionWithData("output directory exists", [ "current_directory" => $current_directory, "output_directory" => $output_directory]);
+
         mkdir($output_directory, 0777, true);
 
         foreach ($this->filesToReplace($current_directory) as $absolute_filename => $output_filename) {
@@ -124,7 +125,6 @@ class TemplateFiller
      * Cuando se usa solamente {@see is_dir} {@see TemplateFiller2Test::testRunPharRelative2()} falla.
      * @param string $input_dir
      * @return false|string
-     * @throws Exception
      */
     public static function isDirForPhar(string $input_dir) : bool {
         if ( $input_dir = realpath($input_dir) )

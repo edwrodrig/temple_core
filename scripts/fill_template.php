@@ -4,6 +4,7 @@ declare(strict_types=1);
 use edwrodrig\temple_core\TemplateFiller;
 
 require_once(__DIR__ . '/../src/TemplateFiller.php');
+require_once(__DIR__ . '/../vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php');
 
 $usage = sprintf("Uso : %s company project input_dir output_dir", $argv[0]);
 

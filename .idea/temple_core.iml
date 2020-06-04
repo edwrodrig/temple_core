@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="edwrodrig/temple_core" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/edwrodrig/exception_with_data" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mikey179/vfsstream" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />

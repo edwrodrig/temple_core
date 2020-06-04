@@ -12,7 +12,8 @@ class PharBuilder
 {
     private array $files = [
         'scripts/fill_template.php' => __DIR__ . '/../scripts/fill_template.php',
-        'src/TemplateFiller.php' => __DIR__ . '/TemplateFiller.php'
+        'src/TemplateFiller.php' => __DIR__ . '/TemplateFiller.php',
+        'vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php' => __DIR__ . '/../vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php'
     ];
 
     protected function __construct() {}
