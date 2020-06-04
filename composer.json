@@ -28,7 +28,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "test\\edwrodrig\\temple_core\\": "tests/"
+      "test\\edwrodrig\\temple_core\\": "tests/",
+      "test\\local\\edwrodrig\\temple_core\\" : "tests/local/"
     },
     "files" : [
       "src/PharBuilder.php"

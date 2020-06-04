@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace test\edwrodrig\temple_core;
 
-use Exception;
+use edwrodrig\exception_with_data\ExceptionWithData;
+use edwrodrig\temple_core\PharBuilder;
 use PHPUnit\Framework\TestCase;
 
 class PharBuilderTest extends TestCase
@@ -23,79 +24,49 @@ class PharBuilderTest extends TestCase
     }
 
     public function tearDown() : void {
-        unlink($this->phar_file);
+        if ( file_exists($this->phar_file))
+            unlink($this->phar_file);
         exec(sprintf('rm -rf %s', escapeshellarg($this->output_folder)));
     }
 
     /**
-     * @throws Exception
+     * @throws ExceptionWithData
      */
     public function testMakePhar() {
-        $script_file = __DIR__ . '/../scripts/make_phar.php';
 
-        $command = sprintf('php -d phar.readonly=Off %s %s', escapeshellarg($script_file), escapeshellarg($this->phar_file));
-        exec($command, $output, $return);
-        $this->assertEquals([realpath($this->phar_file)], $output);
-        $this->assertEquals(0, $return);
+        $builder = new PharBuilder();
+        $builder->buildPhar($this->phar_file);
+
         $this->assertFileExists($this->phar_file);
     }
 
     /**
-     * @throws Exception
+     * @throws ExceptionWithData
      */
-    public function testRunPhar() {
-        $this->testMakePhar();
+    public function testMakePharAlreadyExists() {
 
-        $command = sprintf('php %s company project %s %s', escapeshellarg($this->phar_file), escapeshellarg(__DIR__ . '/../src'), escapeshellarg($this->output_folder));
-        exec($command, $output, $return);
-        $this->assertEquals([], $output);
-        $this->assertEquals(0, $return);
-        $this->assertDirectoryExists($this->output_folder);
+        touch($this->phar_file);
+        $builder = new PharBuilder();
+        $builder->buildPhar($this->phar_file);
+
+        $this->assertFileExists($this->phar_file);
     }
 
-    /**
-     * @throws Exception
-     */
-    public function testRunPharRelative() {
-        $this->testMakePhar();
+    public function testMakePharReadOnly() {
 
-        chdir(__DIR__);
-        $command = sprintf('php %s company project %s %s',
-            escapeshellarg(basename($this->phar_file)),
-            escapeshellarg('../src'),
-            escapeshellarg(basename($this->output_folder))
-            );
-        exec($command, $output, $return);
-        $this->assertEquals([], $output);
-        $this->assertEquals(0, $return);
-        $this->assertDirectoryExists($this->output_folder);
-    }
+        try {
+            ini_set('phar.readonly', '1');
 
-    /**
-     * Error replicado de problemas de is_dir cuando se está dentro de un phar.
-     * @throws Exception
-     */
-    public function testRunPharRelative2() {
-        $this->testMakePhar();
+            $builder = new PharBuilder();
+            $builder->buildPhar($this->phar_file);
+            $this->fail("should throw");
 
-        mkdir($this->output_folder);
-        chdir($this->output_folder);
+        } catch (ExceptionWithData $exception) {
+            $this->assertEquals("can't write a Phar file", $exception->getMessage());
+            $this->assertEquals(['output' => $this->phar_file, 'phar.readonly' => '1'], $exception->getData());
+        }
 
-        mkdir('test/input', 0777, true);
-        touch('test/input/hola');
 
-        chdir('test');
-        copy($this->phar_file, 'demo.phar');
-
-        $command = sprintf('php demo.phar company project %s %s',
-            escapeshellarg('input'),
-            escapeshellarg('output')
-        );
-        exec($command, $output, $return);
-        $this->assertEquals("", $output[0] ?? "");
-        $this->assertEquals(0, $return);
-        $this->assertDirectoryExists($this->output_folder . '/test/output');
-        $this->assertFileExists($this->output_folder . '/test/output/hola');
     }
 
 }

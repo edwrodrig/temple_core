@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace edwrodrig\temple_core;
 
 use ArrayIterator;
+use edwrodrig\exception_with_data\ExceptionWithData;
 use Exception;
 use Phar;
 use Throwable;
@@ -16,17 +17,15 @@ class PharBuilder
         'vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php' => __DIR__ . '/../vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php'
     ];
 
-    protected function __construct() {}
-
     /**
      * Este método construye un Phar
      * @param string $output
      * @return bool
-     * @throws Exception
+     * @throws ExceptionWithData
      */
-    protected function buildPhar(string $output) {
+    public function buildPhar(string $output) {
         if ( !Phar::canWrite() )
-            throw new Exception("can't write a Phar file");
+            throw new ExceptionWithData("can't write a Phar file", ['output' => $output, 'phar.readonly' => ini_get('phar.readonly')]);
         if ( file_exists($output) )
             unlink($output);
         $phar = new Phar($output, 0, 'temple_core.phar');
@@ -43,6 +42,7 @@ class PharBuilder
      * El script que contenga esta llamada debe tener configurada la variable {@see https://www.php.net/manual/es/phar.configuration.php#ini.phar.readonly phar.readonly} en <strong>On</strong>
      * Eso se puede hacer modificando el archivo {@see https://www.php.net/manual/en/configuration.file.php php.ini} o llamando el script con <code>php -d phar.readonly=Off</code>.
      * El primer argumento que captura es el nombre de phar de salida.
+     * @codeCoverageIgnore
      */
     public static function consoleLaunch() {
         global $argv;
