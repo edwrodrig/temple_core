@@ -37,7 +37,7 @@ composer require labo86/temple_core
 ```
 
 ## Instalación como ejecutable
-Se puede construir un ejecutable con [make_phar.php](https://github.com/labo86/hapi_core/blob/master/scripts/make_phar.php) usando el siguiente comando:
+Se puede construir un ejecutable con [make_phar.php](https://github.com/labo86/temple_core/blob/master/scripts/make_phar.php) usando el siguiente comando:
 ```shell script
 php -d phar.readonly=Off scripts/make_phar.php
 ```
@@ -47,11 +47,11 @@ El comando anterior construirá <code>temple_core.phar</code> que se podrá lanz
 ```shell script
 php temple_core.phar company project input_dir output_dir
 ```
-Los argumentos corresponden a cada una de los variables recibidas por la clase [TemplateFiller](https://github.com/labo86/hapi_core/blob/master/src/TemplateFiller.php)
+Los argumentos corresponden a cada una de los variables recibidas por la clase [TemplateFiller](https://github.com/labo86/temple_core/blob/master/src/TemplateFiller.php)
 
 
 ## Información de mi máquina de desarrollo
-Salida de [system_info.sh](https://github.com/labo86/hapi_core/blob/master/scripts/system_info.sh)
+Salida de [system_info.sh](https://github.com/labo86/temple_core/blob/master/scripts/system_info.sh)
 ```
 + hostnamectl
 + grep -e 'Operating System:' -e Kernel:
