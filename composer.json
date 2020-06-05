@@ -28,8 +28,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "test\\labo86\\temple_core\\": "tests/",
-      "test\\local\\labo86\\temple_core\\" : "tests/local/"
+      "test\\labo86\\temple_core\\": "test/",
+      "test\\local\\labo86\\temple_core\\" : "test/local/"
     },
     "files" : [
       "src/PharBuilder.php"
@@ -42,7 +42,7 @@
       "/examples",
       "/scripts",
       "/src/PharBuilder.php",
-      "/tests",
+      "/test",
       "/.gitignore",
       "/.phpunit.result.cache",
       "/phpunit.xml.dist",
