@@ -1,21 +1,21 @@
-edwrodrig\temple_core
+labo86\temple_core
 ========
 Una biblioteca para procesar plantillas de proyectos.
 
-[![Latest Stable Version](https://poser.pugx.org/edwrodrig/temple_core/v/stable)](https://packagist.org/packages/edwrodrig/temple_core)
-[![Total Downloads](https://poser.pugx.org/edwrodrig/temple_core/downloads)](https://packagist.org/packages/edwrodrig/temple_core)
-[![License](https://poser.pugx.org/edwrodrig/temple_core/license)](https://github.com/edwrodrig/temple_core/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/edwrodrig/temple_core.svg?branch=master)](https://travis-ci.org/edwrodrig/temple_core)
-[![codecov.io Code Coverage](https://codecov.io/gh/edwrodrig/temple_core/branch/master/graph/badge.svg)](https://codecov.io/github/edwrodrig/temple_core?branch=master)
-[![Code Climate](https://codeclimate.com/github/edwrodrig/temple_core/badges/gpa.svg)](https://codeclimate.com/github/edwrodrig/temple_core)
+[![Latest Stable Version](https://poser.pugx.org/labo86/temple_core/v/stable)](https://packagist.org/packages/labo86/temple_core)
+[![Total Downloads](https://poser.pugx.org/labo86/temple_core/downloads)](https://packagist.org/packages/labo86/temple_core)
+[![License](https://poser.pugx.org/labo86/temple_core/license)](https://github.com/labo86/temple_core/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/labo86/temple_core.svg?branch=master)](https://travis-ci.org/labo86/temple_core)
+[![codecov.io Code Coverage](https://codecov.io/gh/labo86/temple_core/branch/master/graph/badge.svg)](https://codecov.io/github/labo86/temple_core?branch=master)
+[![Code Climate](https://codeclimate.com/github/labo86/temple_core/badges/gpa.svg)](https://codeclimate.com/github/labo86/temple_core)
 ![Hecho en Chile](https://img.shields.io/badge/country-Chile-red)
 
 ## Uso
 Suponiendo que tenemos un directorio `input_dir` con archivos de cualquier tipo.
 ```php
-use \edwrodrig\temple_core\TemplateFiller;
+use \labo86\temple_core\TemplateFiller;
 
-$company = 'edwrodrig';
+$company = 'labo86';
 $project = 'project';
 $filler = new TemplateFiller($company, $project);
 
@@ -33,11 +33,11 @@ Las reglas de reemplazo son las siguientes:
 
 ## Instalación como biblioteca
 ```shell script
-composer require edwrodrig/temple_core
+composer require labo86/temple_core
 ```
 
 ## Instalación como ejecutable
-Se puede construir un ejecutable con [make_phar.php](https://github.com/edwrodrig/hapi_core/blob/master/scripts/make_phar.php) usando el siguiente comando:
+Se puede construir un ejecutable con [make_phar.php](https://github.com/labo86/hapi_core/blob/master/scripts/make_phar.php) usando el siguiente comando:
 ```shell script
 php -d phar.readonly=Off scripts/make_phar.php
 ```
@@ -47,11 +47,11 @@ El comando anterior construirá <code>temple_core.phar</code> que se podrá lanz
 ```shell script
 php temple_core.phar company project input_dir output_dir
 ```
-Los argumentos corresponden a cada una de los variables recibidas por la clase [TemplateFiller](https://github.com/edwrodrig/hapi_core/blob/master/src/TemplateFiller.php)
+Los argumentos corresponden a cada una de los variables recibidas por la clase [TemplateFiller](https://github.com/labo86/hapi_core/blob/master/src/TemplateFiller.php)
 
 
 ## Información de mi máquina de desarrollo
-Salida de [system_info.sh](https://github.com/edwrodrig/hapi_core/blob/master/scripts/system_info.sh)
+Salida de [system_info.sh](https://github.com/labo86/hapi_core/blob/master/scripts/system_info.sh)
 ```
 + hostnamectl
 + grep -e 'Operating System:' -e Kernel:

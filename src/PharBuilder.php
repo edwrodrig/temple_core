@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace edwrodrig\temple_core;
+namespace labo86\temple_core;
 
 use ArrayIterator;
-use edwrodrig\exception_with_data\ExceptionWithData;
+use labo86\exception_with_data\ExceptionWithData;
 use Phar;
 use Throwable;
 
@@ -13,7 +13,7 @@ class PharBuilder
     private array $files = [
         'scripts/fill_template.php' => __DIR__ . '/../scripts/fill_template.php',
         'src/TemplateFiller.php' => __DIR__ . '/TemplateFiller.php',
-        'vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php' => __DIR__ . '/../vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php'
+        'vendor/labo86/exception_with_data/src/ExceptionWithData.php' => __DIR__ . '/../vendor/labo86/exception_with_data/src/ExceptionWithData.php'
     ];
 
     /**

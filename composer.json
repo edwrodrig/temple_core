@@ -1,5 +1,5 @@
 {
-  "name": "edwrodrig/temple_core",
+  "name": "labo86/temple_core",
   "description": "Una biblioteca para procesar plantillas de proyectos",
   "authors": [
     {
@@ -13,7 +13,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^7.4",
-    "edwrodrig/exception_with_data": "^1.0",
+    "labo86/exception_with_data": "^1.0",
     "ext-json": "*"
   },
   "require-dev": {
@@ -22,14 +22,14 @@
   },
   "autoload": {
     "psr-4": {
-      "edwrodrig\\temple_core\\": "src/"
+      "labo86\\temple_core\\": "src/"
     },
     "exclude-from-classmap": ["src/PharBuilder.php"]
   },
   "autoload-dev": {
     "psr-4": {
-      "test\\edwrodrig\\temple_core\\": "tests/",
-      "test\\local\\edwrodrig\\temple_core\\" : "tests/local/"
+      "test\\labo86\\temple_core\\": "tests/",
+      "test\\local\\labo86\\temple_core\\" : "tests/local/"
     },
     "files" : [
       "src/PharBuilder.php"

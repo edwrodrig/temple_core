@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use edwrodrig\exception_with_data\ExceptionWithData;
-use edwrodrig\temple_core\TemplateFiller;
+use labo86\exception_with_data\ExceptionWithData;
+use labo86\temple_core\TemplateFiller;
 
 require_once(__DIR__ . '/../src/TemplateFiller.php');
-require_once(__DIR__ . '/../vendor/edwrodrig/exception_with_data/src/ExceptionWithData.php');
+require_once(__DIR__ . '/../vendor/labo86/exception_with_data/src/ExceptionWithData.php');
 
 $usage = sprintf("Uso : %s company project input_dir output_dir", $argv[0]);
 

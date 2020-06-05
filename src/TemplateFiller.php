@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace edwrodrig\temple_core;
+namespace labo86\temple_core;
 
 use DirectoryIterator;
-use edwrodrig\exception_with_data\ExceptionWithData;
+use labo86\exception_with_data\ExceptionWithData;
 use Generator;
 
 class TemplateFiller
@@ -18,7 +18,7 @@ class TemplateFiller
      * Esta clase sirve para llenar un directorio template.
      * <h2>Modo de uso</h2>
      * <code>
-     * $filler = new TemplateFiller('edwrodrig', 'project');
+     * $filler = new TemplateFiller('labo86', 'project');
      *
      * //ignoramos los archivos o carpetas con nombre .git
      * $filler->ignore('.git');
