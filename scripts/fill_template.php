@@ -8,28 +8,34 @@ use labo86\exception_with_data\ExceptionWithData;
 use labo86\temple_core\TemplateFiller;
 
 $usage = sprintf(<<<EOF
-Uso : %s company project input_dir output_dir
-Variables disponibles:
+Uso : %s -d var_name_1 var_value_1 [-d var_name_2 var_value_2] ... input_dir output_dir
+Cada variable a reemplazar se pone con su nombre de variable seguido por su valor.
+Se pueden poner tantas variables como se deseen
+
+Variables clásicas:
     tpl_company_tpl
     tpl_project_tpl
     tpl_project_uc_first_tpl
     tpl_project_uc_tpl
 EOF, $argv[0]);
 
-$company = $argv[1] ?? die($usage);
-$project = $argv[2] ?? die($usage);
+$size = count($argv);
 
-$input_dir = $argv[3] ?? die($usage);
-$output_dir = $argv[4] ?? die($usage);
+if ( $size < 4 ) die($usage);
 
+$input_dir = $argv[$size - 2] ?? die($usage);
+$output_dir = $argv[$size - 1] ?? die($usage);
 
 try {
-    $filler = new TemplateFiller([
-        'tpl_company_tpl' => $company,
-        'tpl_project_tpl' => $project,
-        'tpl_project_uc_first_tpl' => ucfirst($project),
-        'tpl_project_uc_tpl' => strtoupper($project)
-    ]);
+    $replacement_map = TemplateFiller::buildReplacementMapFromCommandLineArgs($argv);
+} catch ( ExceptionWithData $exception ) {
+    die($usage);
+}
+
+try {
+
+
+    $filler = new TemplateFiller($replacement_map);
 
     //ignoramos los archivos o carpetas con nombre .git
     $filler->ignore('.git');

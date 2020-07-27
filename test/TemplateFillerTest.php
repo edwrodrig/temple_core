@@ -168,5 +168,45 @@ class TemplateFillerTest extends TestCase
         $this->assertEquals($expected, file_get_contents($filename), $message);
     }
 
+    public function buildReplacementMapFromCommandLineArgsProvider()
+    {
+        return [
+            [['a' => '1'], ['-d', 'a', '1']],
+            [['a' => '1', 'b' => '2'], ['-d', 'a', '1', '-d', 'b', '2']],
+            [['a' => '1'], ['b', '-d', 'a', '1', 'p']],
+            [[], ['b', 'a', '1', 'p']],
+        ];
+    }
+
+    /**
+     * @dataProvider buildReplacementMapFromCommandLineArgsProvider
+     * @param array $expected
+     * @param array $args
+     * @throws ExceptionWithData
+     */
+    public function testBuildReplacementMapFromCommandLineArgs(array $expected, array $args) {
+        $this->assertEquals($expected, TemplateFiller::buildReplacementMapFromCommandLineArgs($args));
+    }
+
+    public function testBuildReplacementMapFromCommandLineArgsNoName() {
+        try {
+            TemplateFiller::buildReplacementMapFromCommandLineArgs(['-d']);
+            $this->fail("should throw");
+
+        } catch (Exception $exception) {
+            $this->assertEquals("variable definition name is not found", $exception->getMessage());
+        }
+    }
+
+    public function testBuildReplacementMapFromCommandLineArgsNoValue() {
+        try {
+            TemplateFiller::buildReplacementMapFromCommandLineArgs(['-d', 'a']);
+            $this->fail("should throw");
+
+        } catch (Exception $exception) {
+            $this->assertEquals("variable definition value is not found", $exception->getMessage());
+        }
+    }
+
 
 }

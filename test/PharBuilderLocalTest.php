@@ -52,7 +52,7 @@ class PharBuilderLocalTest extends TestCase
     public function testRunPhar() {
         $this->testMakePhar();
 
-        $command = sprintf('php %s company project %s %s', escapeshellarg($this->phar_file), escapeshellarg(__DIR__ . '/../src'), escapeshellarg($this->output_folder));
+        $command = sprintf('php %s -d tpl_company_tpl company -d tpl_project_tpl project %s %s', escapeshellarg($this->phar_file), escapeshellarg(__DIR__ . '/../src'), escapeshellarg($this->output_folder));
         exec($command, $output, $return);
         $this->assertEquals([], $output);
         $this->assertEquals(0, $return);
@@ -66,7 +66,7 @@ class PharBuilderLocalTest extends TestCase
         $this->testMakePhar();
 
         chdir($this->path);
-        $command = sprintf('php %s company project %s %s',
+        $command = sprintf('php %s -d tpl_company_tpl company -d tpl_project_tpl project %s %s',
             escapeshellarg('phar.phar'),
             escapeshellarg('../../src'),
             escapeshellarg('output')
@@ -93,7 +93,7 @@ class PharBuilderLocalTest extends TestCase
         chdir('test');
         copy($this->phar_file, 'demo.phar');
 
-        $command = sprintf('php demo.phar company project %s %s',
+        $command = sprintf('php demo.phar -d tpl_company_tpl company -d tpl_project_tpl project %s %s',
             escapeshellarg('input'),
             escapeshellarg('output')
         );

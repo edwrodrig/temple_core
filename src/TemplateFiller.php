@@ -123,4 +123,33 @@ class TemplateFiller
 
     }
 
+    /**
+     * Construye un mapa de reemplazo para usarlo en el constructor de esta clase desde un arreglo que proviene de la línea de comandos
+     * @param array $args
+     * @return array
+     * @throws ExceptionWithData
+     */
+    public static function buildReplacementMapFromCommandLineArgs(array $args) : array {
+        $replacement_map  = [];
+        while ( true ) {
+            $position = array_search('-d', $args);
+            if ( $position === FALSE ) return $replacement_map;
+            if ( !isset($args[$position + 1]) )
+                throw new ExceptionWithData('variable definition name is not found', [
+                    'args' => $args,
+                    'position' => $position + 1
+                ]);
+
+            if ( !isset($args[$position + 2]) )
+                throw new ExceptionWithData('variable definition value is not found', [
+                    'args' => $args,
+                    'position' => $position + 2
+                ]);
+
+
+             $replacement_map[$args[$position + 1]] = $args[$position + 2];
+             $args = array_slice($args, $position + 2);
+        }
+    }
+
 }

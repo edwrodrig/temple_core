@@ -29,7 +29,7 @@ class FillTemplateScriptTest extends TestCase
      */
     public function testScriptOk()
     {
-        $command = sprintf('php %s company project %s %s',
+        $command = sprintf('php %s -d tpl_company_tpl company -d tpl_project_tpl project %s %s',
             escapeshellarg(__DIR__ . '/../scripts/fill_template.php'),
             escapeshellarg(__DIR__ . '/../src'),
             escapeshellarg($this->output_folder)
@@ -47,7 +47,7 @@ class FillTemplateScriptTest extends TestCase
     {
         chdir(__DIR__);
 
-        $command = sprintf('php %s company project %s %s',
+        $command = sprintf('php %s -d tpl_company_tpl company -d tpl_project_tpl project %s %s',
             escapeshellarg( '../scripts/fill_template.php'),
             escapeshellarg('../src'),
             escapeshellarg(basename($this->output_folder))
@@ -76,21 +76,6 @@ class FillTemplateScriptTest extends TestCase
     public function testScriptTwoArg()
     {
         $command = sprintf('php %s company project', escapeshellarg(__DIR__ . '/../scripts/fill_template.php'));
-        exec($command, $output, $return);
-        $this->assertStringStartsWith("Uso :", $output[0]);
-        $this->assertEquals(0, $return);
-        $this->assertDirectoryNotExists($this->output_folder);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testScriptThreeArg()
-    {
-        $command = sprintf('php %s company project %s',
-            escapeshellarg(__DIR__ . '/../scripts/fill_template.php'),
-            escapeshellarg(__DIR__ . '/../src')
-        );
         exec($command, $output, $return);
         $this->assertStringStartsWith("Uso :", $output[0]);
         $this->assertEquals(0, $return);
