@@ -17,7 +17,10 @@ use \labo86\temple_core\TemplateFiller;
 
 $company = 'labo86';
 $project = 'project';
-$filler = new TemplateFiller($company, $project);
+$filler = new TemplateFiller([
+    'tpl_company_tpl' => $company,
+    'tpl_project_tpl' => $project
+]);
 
 //informamos que los archivos o carpetas con nombre .git o ignored_file serán ignorados
 $filler->ignore('.git', 'ignored_file');
@@ -47,7 +50,7 @@ El comando anterior construirá <code>temple_core.phar</code> que se podrá lanz
 ```shell script
 php temple_core.phar company project input_dir output_dir
 ```
-Los argumentos corresponden a cada una de los variables recibidas por la clase [TemplateFiller](https://github.com/labo86/temple_core/blob/master/src/TemplateFiller.php)
+Los argumentos corresponden a cada una de las variables recibidas en el [el script de llenado](https://github.com/labo86/temple_core/blob/master/script/fill_template.php)
 
 
 ## Información de mi máquina de desarrollo

@@ -44,7 +44,7 @@ class TemplateFillerTest extends TestCase
      */
     public function testReplaceBasic(string $expected, string $actual)
     {
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(["tpl_company_tpl" =>"company", "tpl_project_tpl" => "project", "tpl_project_uc_first_tpl" => "Project"]);
         $this->assertEquals($expected, $template->replace($actual));
     }
 
@@ -58,7 +58,7 @@ class TemplateFillerTest extends TestCase
         $this->expectExceptionMessage("current directory does not exists");
         $path = $this->path;
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(["tpl_company_tpl" =>"company", "tpl_project_tpl" => "project"]);
         $template->fillTemplate($path . '/input', $path . '/output');
 
     }
@@ -75,7 +75,7 @@ class TemplateFillerTest extends TestCase
         mkdir( $path . '/input');
         mkdir( $path . '/output');
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(["tpl_company_tpl" =>"company", "tpl_project_tpl" => "project"]);
         $template->fillTemplate($path . '/input', $path . '/output');
 
     }
@@ -89,7 +89,7 @@ class TemplateFillerTest extends TestCase
         mkdir( $path . '/input');
         file_put_contents($path . '/input/tpl_project_tpl', "tpl_company_tpl");
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(["tpl_company_tpl" =>"company", "tpl_project_tpl" => "project"]);
         $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileExists( $path . '/output/project');
         $this->assertEquals("company", file_get_contents($path . '/output/project'));
@@ -118,7 +118,7 @@ class TemplateFillerTest extends TestCase
 
         file_put_contents($path . '/input/' . $file, "content");
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(["tpl_company_tpl" =>"company", "tpl_project_tpl" => "project"]);
         $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileEqualsString( "content", $path . '/output/' . $file);
     }
@@ -135,7 +135,7 @@ class TemplateFillerTest extends TestCase
         mkdir($path . '/input/nested');
         file_put_contents($path . '/input/nested/.hidden', "content");
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(["tpl_company_tpl" =>"company", "tpl_project_tpl" => "project"]);
         $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileEqualsString( "company", $path . '/output/project');
         $this->assertFileEqualsString( "content", $path . '/output/.hidden');
@@ -154,7 +154,7 @@ class TemplateFillerTest extends TestCase
         mkdir($path . '/input/nested');
         file_put_contents($path . '/input/nested/.hidden', "content");
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(["tpl_company_tpl" =>"company", "tpl_project_tpl" => "project"]);
         $template->ignore('.hidden');
         $template->fillTemplate($path . '/input', $path . '/output');
         $this->assertFileEqualsString( "company", $path . '/output/project');

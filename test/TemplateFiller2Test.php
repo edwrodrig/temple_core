@@ -49,7 +49,7 @@ class TemplateFiller2Test extends TestCase
         mkdir($folder, 0777, true);
         file_put_contents('input/' . $file, "content");
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(['tpl_company_tpl' => "company", 'tpl_project_tpl' => "project"]);
         $template->fillTemplate( 'input',  'output');
         $this->assertFileEqualsString( "content", 'output/' . $file);
     }
@@ -66,7 +66,7 @@ class TemplateFiller2Test extends TestCase
         mkdir($folder, 0777, true);
         file_put_contents('input/' . $file, "tpl_company_tpl_tpl_project_tpl");
 
-        $template = new TemplateFiller("company", "project");
+        $template = new TemplateFiller(['tpl_company_tpl' => "company", 'tpl_project_tpl' => "project"]);
         $template->fillTemplate( 'input',  'output');
         $this->assertFileEqualsString( "company_project", 'output/' . $file);
     }

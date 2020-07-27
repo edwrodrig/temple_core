@@ -9,16 +9,15 @@ use Generator;
 
 class TemplateFiller
 {
-    public string $company;
-    public string $project;
 
     public array $ignored_file_list = [];
+    public array $replacement_map;
 
     /**
      * Esta clase sirve para llenar un directorio template.
      * <h2>Modo de uso</h2>
      * <code>
-     * $filler = new TemplateFiller('labo86', 'project');
+     * $filler = new TemplateFiller(['tpl_company_tpl' => 'labo86', 'tpl_project_tpl' => 'project']);
      *
      * //ignoramos los archivos o carpetas con nombre .git
      * $filler->ignore('.git');
@@ -28,12 +27,10 @@ class TemplateFiller
      * </code>
      * @see fillTemplate() para saber como se transforma el directorio
      * @see replace() para saber como se transforman los nombres y los contenidos de los archivos
-     * @param string $company
-     * @param string $project
+     * @param array $replacement_map
      */
-    public function __construct(string $company, string $project) {
-        $this->company = $company;
-        $this->project = $project;
+    public function __construct(array $replacement_map) {
+        $this->replacement_map = $replacement_map;
     }
 
     /**
@@ -48,21 +45,13 @@ class TemplateFiller
     /**
      * Transforma un string de un template.
      * Este método transforma las ocurrencias de las variables de template por sus correspondientes versiones.
-     * Las variables reconocidas son:
-     *  - tpl_company_tpl
-     *  - tpl_project_tpl
-     *  - tpl_project_uc_first_tpl
-     *  - tpl_project_uc_tpl
-     *
-     * Se eligió esa notación <code>tpl_algo_tpl</code> para que las variables sean compatibles con {@see https://www.php-fig.org/psr/psr-4/ PSR-4}
      * @param string $string el string a reemplazar
      * @return string el string reemplazado
      */
     public function replace(string $string) : string {
-        $string = str_replace("tpl_company_tpl", $this->company, $string);
-        $string = str_replace("tpl_project_tpl", $this->project, $string);
-        $string = str_replace("tpl_project_uc_first_tpl", ucfirst($this->project), $string);
-        $string = str_replace("tpl_project_uc_tpl", strtoupper($this->project), $string);
+        foreach ( $this->replacement_map as $variable_name => $value ) {
+            $string = str_replace($variable_name, $value, $string);
+        }
         return $string;
     }
 

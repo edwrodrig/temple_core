@@ -1,13 +1,20 @@
 <?php
 declare(strict_types=1);
 
-use labo86\exception_with_data\ExceptionWithData;
-use labo86\temple_core\TemplateFiller;
-
 require_once(__DIR__ . '/../src/TemplateFiller.php');
 require_once(__DIR__ . '/../vendor/labo86/exception_with_data/src/ExceptionWithData.php');
 
-$usage = sprintf("Uso : %s company project input_dir output_dir", $argv[0]);
+use labo86\exception_with_data\ExceptionWithData;
+use labo86\temple_core\TemplateFiller;
+
+$usage = sprintf(<<<EOF
+Uso : %s company project input_dir output_dir
+Variables disponibles:
+    tpl_company_tpl
+    tpl_project_tpl
+    tpl_project_uc_first_tpl
+    tpl_project_uc_tpl
+EOF, $argv[0]);
 
 $company = $argv[1] ?? die($usage);
 $project = $argv[2] ?? die($usage);
@@ -17,7 +24,12 @@ $output_dir = $argv[4] ?? die($usage);
 
 
 try {
-    $filler = new TemplateFiller($company, $project);
+    $filler = new TemplateFiller([
+        'tpl_company_tpl' => $company,
+        'tpl_project_tpl' => $project,
+        'tpl_project_uc_first_tpl' => ucfirst($project),
+        'tpl_project_uc_tpl' => strtoupper($project)
+    ]);
 
     //ignoramos los archivos o carpetas con nombre .git
     $filler->ignore('.git');

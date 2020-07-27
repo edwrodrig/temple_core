@@ -27,8 +27,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "test\\labo86\\temple_core\\": "test/",
-      "test\\local\\labo86\\temple_core\\" : "test/local/"
+      "test\\labo86\\temple_core\\": "test/"
     },
     "files" : [
       "src/PharBuilder.php"
