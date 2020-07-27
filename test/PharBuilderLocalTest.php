@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace test\labo86\temple_core\local;
+namespace test\labo86\temple_core;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class PharBuilderTest extends TestCase
+class PharBuilderLocalTest extends TestCase
 {
 
     /**
@@ -15,23 +15,29 @@ class PharBuilderTest extends TestCase
     private string $output_folder;
     private string $phar_file;
 
-    public function setUp() : void {
-        $this->output_folder = tempnam(__DIR__, 'demo_phar');
-        $this->phar_file = $this->output_folder . '.phar';
+    private $path;
 
-        unlink($this->output_folder);
+    public function setUp(): void
+    {
+        $this->path = tempnam(__DIR__, 'demo');
+
+        unlink($this->path);
+        mkdir($this->path, 0777);
+
+        $this->phar_file = $this->path . '/phar.phar';
+        $this->output_folder = $this->path . '/output';
     }
 
-    public function tearDown() : void {
-        unlink($this->phar_file);
-        exec(sprintf('rm -rf %s', escapeshellarg($this->output_folder)));
+    public function tearDown(): void
+    {
+        exec('rm -rf ' . $this->path);
     }
 
     /**
      * @throws Exception
      */
     public function testMakePhar() {
-        $script_file = __DIR__ . '/../../scripts/make_phar.php';
+        $script_file = __DIR__ . '/../scripts/make_phar.php';
 
         $command = sprintf('php -d phar.readonly=Off %s %s', escapeshellarg($script_file), escapeshellarg($this->phar_file));
         exec($command, $output, $return);
@@ -46,7 +52,7 @@ class PharBuilderTest extends TestCase
     public function testRunPhar() {
         $this->testMakePhar();
 
-        $command = sprintf('php %s company project %s %s', escapeshellarg($this->phar_file), escapeshellarg(__DIR__ . '/../../src'), escapeshellarg($this->output_folder));
+        $command = sprintf('php %s company project %s %s', escapeshellarg($this->phar_file), escapeshellarg(__DIR__ . '/../src'), escapeshellarg($this->output_folder));
         exec($command, $output, $return);
         $this->assertEquals([], $output);
         $this->assertEquals(0, $return);
@@ -59,11 +65,11 @@ class PharBuilderTest extends TestCase
     public function testRunPharRelative() {
         $this->testMakePhar();
 
-        chdir(__DIR__);
+        chdir($this->path);
         $command = sprintf('php %s company project %s %s',
-            escapeshellarg(basename($this->phar_file)),
+            escapeshellarg('phar.phar'),
             escapeshellarg('../../src'),
-            escapeshellarg(basename($this->output_folder))
+            escapeshellarg('output')
             );
         exec($command, $output, $return);
         $this->assertEquals([], $output);
