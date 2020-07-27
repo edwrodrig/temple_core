@@ -48,10 +48,10 @@ Hay una [run configuration](https://www.jetbrains.com/help/phpstorm/run-debug-co
 
 El comando anterior construirá <code>temple_core.phar</code> que se podrá lanzar de la siguiente manera:
 ```shell script
-php temple_core.phar company project input_dir output_dir
+php temple_core.phar -d tpl_company_tpl company -d tpl_project_tpl project input_dir output_dir
 ```
 Los argumentos corresponden a cada una de las variables recibidas en el [el script de llenado](https://github.com/labo86/temple_core/blob/master/script/fill_template.php)
-
+Cada variable de remplazo debe ir antecedida por un parámetro -d donde se debe especificar el nombre de la variable y su valor
 
 ## Información de mi máquina de desarrollo
 Salida de [system_info.sh](https://github.com/labo86/temple_core/blob/master/scripts/system_info.sh)
